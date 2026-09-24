@@ -597,9 +597,7 @@ class Game extends React.Component<
             </form>
 
             <Button onClick={this.playClick}>
-              {t(mode === 'random' ? 'playRandomXSeconds' : 'playXSeconds', {
-                count: stageToTime(stage),
-              })}
+              {t('playXSeconds', { count: stageToTime(stage) })}
             </Button>
 
             {guessList}

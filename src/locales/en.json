@@ -8,7 +8,6 @@
     "attemptsLabel": "Previous attempts",
     "suggestionsLabel": "Song suggestions",
     "playXSeconds": "Play {{count}}s",
-    "playRandomXSeconds": "Play {{count}}s from the mystery spot",
     "guessBtn": "Guess",
     "skipBtn": "Skip +{{count}}s",
     "skipAndReveal": "Skip and reveal",
