@@ -96,8 +96,6 @@ const snapshotTrack = (
   };
 };
 
-export const getCurrentTrack = () => snapshotTrack();
-
 export const pauseAndRewind = () => {
   Spicetify.Player.pause();
   Spicetify.Player.seek(0);
