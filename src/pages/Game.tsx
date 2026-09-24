@@ -76,7 +76,6 @@ class Game extends React.Component<
   searchRequest = 0;
   mounted = false;
   titleRequest = 0;
-  titleOverride?: { clear: () => void };
   inputRef = React.createRef<HTMLInputElement>();
   nextButtonRef = React.createRef<HTMLButtonElement>();
 
@@ -205,16 +204,16 @@ class Game extends React.Component<
       return;
     }
 
+    // set() replaces any override it made before and reset() removes it, so
+    // there is no handle to keep. The handle it resolves to has cancel(), not
+    // the clear() that spicetify.d.ts declares.
     const request = ++this.titleRequest;
     try {
-      const override = await Spicetify.AppTitle.set(this.props.t('appName'));
+      await Spicetify.AppTitle.set(this.props.t('appName'));
+      // The round ended while set() was in flight, so undo it.
       if (request !== this.titleRequest || !this.mounted) {
-        override.clear();
-        return;
+        await Spicetify.AppTitle.reset?.();
       }
-
-      this.titleOverride?.clear();
-      this.titleOverride = override;
     } catch (error) {
       console.error('Unable to hide the song from the app title:', error);
     }
@@ -222,9 +221,9 @@ class Game extends React.Component<
 
   releaseWindowTitle = () => {
     this.titleRequest += 1;
-    this.titleOverride?.clear();
-    this.titleOverride = undefined;
-    void Spicetify.AppTitle?.reset?.();
+    Spicetify.AppTitle?.reset?.()?.catch((error) => {
+      console.error('Unable to restore the app title:', error);
+    });
   };
 
   guessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
