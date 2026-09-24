@@ -29,7 +29,10 @@
     "errors": {
       "title": "This round couldn’t start",
       "generic": "Spotify returned an unexpected playback error.",
-      "trackChanged": "The song changed outside the game. Start a fresh round to keep the answer fair."
+      "trackChanged": "The song changed outside the game. Start a fresh round to keep the answer fair.",
+      "noPlayableTrack": "Spotify did not load a playable song.",
+      "noPlayableSongs": "No playable songs were found in that source.",
+      "songChangeTimeout": "Spotify did not advance to another song in time."
     },
     "reveal": {
       "wonIn": "Got it in {{count}}",

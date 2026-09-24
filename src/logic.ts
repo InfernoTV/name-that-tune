@@ -1,4 +1,5 @@
 import { diceCoefficient } from 'dice-coefficient';
+import i18n from 'i18next';
 
 import { fetchAndPlay, shuffle, Queue } from './shuffle+';
 import { getLocalStorageDataFromKey } from './Utils';
@@ -78,7 +79,7 @@ const snapshotTrack = (
     || !(item.uri.startsWith('spotify:track:') || item.uri.startsWith('spotify:local:'))
     || !item.name
   ) {
-    throw new Error('Spotify did not load a playable song');
+    throw new Error(i18n.t('errors.noPlayableTrack'));
   }
 
   return {
@@ -151,13 +152,13 @@ const waitForSongChange = (
     Promise.resolve(trigger())
       .then((started) => {
         if (started === false) {
-          fail(new Error('No playable songs were found in that source'));
+          fail(new Error(i18n.t('errors.noPlayableSongs')));
           return;
         }
 
         if (!settled) {
           timeout = setTimeout(() => {
-            fail(new Error('Spotify did not advance to another song in time'));
+            fail(new Error(i18n.t('errors.songChangeTimeout')));
           }, SONG_CHANGE_TIMEOUT_MS);
         }
       })
